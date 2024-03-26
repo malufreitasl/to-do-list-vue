@@ -1,16 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <h1>Welcome to your TO-DO's list app</h1>
+  <div class="container">
+    <ToDoInput />
+    <ToDoItems />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ToDoInput from './components/ToDoInput.vue'
+import ToDoItems from './components/ToDoItems.vue'
+import { mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ToDoInput,
+    ToDoItems
+  },
+  computed: {
+    ...mapState(["items"])
   }
+  
 }
 </script>
 
@@ -22,5 +32,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  margin-top: 30px;
 }
 </style>
