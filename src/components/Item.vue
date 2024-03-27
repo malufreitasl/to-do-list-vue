@@ -1,39 +1,52 @@
 <template>
     <div class="item-card" >
         <div class="item">
-            <div class="item-info">
-                <div class="main-info">           
-                    <input type="checkbox" class="checkbox">
-                    <label @click="onClickShow">{{ item.title }}</label>
-                </div>
+            <div class="item-info" v-if="!item.edit">      
+                <button 
+                    class="checkbox" 
+                    @click="onClickComplete">
+                    <CheckIcon v-if="item.completed"/>
+                </button>
+                <p 
+                    class="item-title" 
+                    @click="showContent" 
+                    v-if="!todoItem.completed">{{ todoItem.title }}
+                </p>
+                <p 
+                    class="item-title-completed" 
+                    @click="showContent" 
+                    v-else>{{ todoItem.title }}
+                </p>
             </div>
-            <div class="buttons">
-                <div class="edit-button">
-                    <PencilIcon />
-                </div>
-                <div class="favorite-button" @click="onClickFavorite" v-if="item.favorite">
-                    <StarIcon/>
-                </div>
-                <div class="favorite-button" @click="onClickFavorite" v-else>
-                    <FilledStarIcon/>
-                </div>
-                <div class="delete-button" @click="onClickRemove">
-                    <TrashIcon />   
-                </div>
+            <div class="item-info" v-else>      
+                <input 
+                    type="text" 
+                    class="item-title" 
+                    v-model="todoItem.title" 
+                    v-on:keyup.enter="onClickEdit"/>
             </div>
+            <Buttons :item="item"/>
         </div>
-        <div v-if="showContent">
-            <div class="description">Description: {{ item.description }} </div>
+        <div class="description">
+            <div 
+                class="description-info" 
+                v-if="item.showDescription && !item.edit">
+                Description: {{ todoItem.description }} 
+            </div>
+            <textarea 
+                class="description-info"  
+                v-else-if="item.showDescription && item.edit" 
+                v-model="todoItem.description" 
+                v-on:keyup.enter="onClickEdit">
+            </textarea>
         </div>
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import PencilIcon from './PencilIcon.vue'
-import StarIcon from './StarIcon.vue'
-import FilledStarIcon from './FilledStarIcon.vue'
-import TrashIcon from './TrashIcon.vue'
+import Buttons from './Buttons.vue';
+import CheckIcon from './CheckIcon.vue';
 
 export default {
   name: 'ToDoList',
@@ -41,33 +54,26 @@ export default {
     item: Object
   },
   components: {
-    PencilIcon, 
-    StarIcon,
-    FilledStarIcon,
-    TrashIcon
+    Buttons,
+    CheckIcon
   },
   data () {
     return {
-      showContent: false,
-      description: this.item.description
+      todoItem: this.item,
     }
   },
   methods: {
-    ...mapActions(["changeFavoriteStatus", "removeItem"]),
-    onClickFavorite () {
-        this.changeFavoriteStatus(this.item.id);
+    ...mapActions(["changeDescriptionStatus", "changeEditStatus", "changeCompletedStatus"]),
+    showContent() {
+        this.changeDescriptionStatus(this.item.id);
     },
-    onClickRemove () {
-        this.removeItem(this.item.id);
-    }, 
-    onClickShow() {
-        this.showContent =  !this.showContent
-        console.log(this.showContent)
-    }, 
-    updateDescription: function(event) {
-      let value = event.target.value;
-      this.description = value;
-    }
+    onClickEdit() {
+        this.changeEditStatus(this.item.id);
+        !this.item.showDescription && this.showContent()
+    },
+    onClickComplete() {
+        this.changeCompletedStatus(this.item.id);
+    },
     }
 }
 </script>
@@ -75,79 +81,97 @@ export default {
 
 <style scoped>
 .item-card {
-  display: flex;
-  overflow-y: scroll;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 5px;
-  width: 100%;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #fafafa;
-  box-shadow: rgb(204, 204, 204) 0px 0px 1em;
+    display: flex;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px;
+    width: 100%;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: #fafafa;
+    box-shadow: rgb(204, 204, 204) 0px 0px 1em;
 }
 .item-card:hover {
     box-shadow: rgb(204, 204, 204) 0px 0px 2em;
 }
 .item {
     display: flex;
-  overflow-y: scroll;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+    overflow-y: scroll;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 .item-info {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 10px;
+    width: 100%;
 }
-.main-info {
+.checkbox {
+    padding: 0.5px 2px;
+    height: 18px;
+    width: 18px;
     display: flex;
     align-items: center;
-    justify-content: start;
-    gap: 10px;
+    justify-content: center;
+    background-color: white;
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+}
+.checkbox:hover {
+    background-color: #EEB038;
 }
 .item-title {
     cursor: pointer;
+    text-align: start;
     width: 100%;
-    justify-self: start;
+}
+.item-title-completed {
+    cursor: pointer;
+    text-align: start;
+    width: 100%;
+    text-decoration-line: line-through;
 }
 .description {
+    width: 95%;
+}
+.description-info {
     text-align: justify;
     font-size: 12px;
     padding-left: 10px;
-    padding-bottom: 0%;
-}
-.buttons {
-    display: flex;
-    justify-self: end;
-    align-self: flex-end;
-    padding-top: 5px;
-    gap: 10px;
-}
-button {
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 12px;
-}
-.favorite-button {
-    cursor: pointer;
-}
-.edit-button {
-    cursor: pointer;
-}
-.delete-button {
-    cursor: pointer;
+    padding-bottom: 10px;
 }
 input[type="checkbox"] {
-  width: 1.2em;
-  height: 1.2rem;
-  accent-color: #EEB038;
-  transition: background-color 0.3s;
+    width: 1.2em;
+    height: 1.2rem;
+    accent-color: #EEB038;
+    transition: background-color 0.3s;
+}
+input[type="text"] {
+    width: 90%;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid rgb(244, 244, 244);
+    padding: 8px ;
+}
+input[type="text"]:focus {
+    outline-color: rgb(223, 223, 223);
+}
+textarea {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 50px;
+    border: 1px solid rgb(244, 244, 244);
+    border-radius: 5px;
+    padding: 10px 12px;
+    margin-right: 15px;
+    resize: none
+}
+textarea:focus {
+    outline-color: rgb(223, 223, 223);
 }
 
 </style>
