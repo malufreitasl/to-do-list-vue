@@ -14,9 +14,11 @@
             <div v-if="items.findIndex(item => item.favorite) === -1">
                 <p>No favorite items yet. Add a favorite item</p>
             </div>
-            <li v-for="item in items" :key="item.id" class="items">
-                <Item :item="item" v-if="item.favorite"/>
-            </li>
+            <div v-if="filteredFavorites.length > 0">
+              <li v-for="item in filteredFavorites" :key="item.id" class="items">
+                <Item :item="item" />
+              </li>
+            </div>
         </div>
     </div>
   </template>
@@ -31,9 +33,14 @@
       Item,
     },
     computed: {
-      ...mapState(["items"])
-    }
-    
+      ...mapState(["items"]),
+      filteredItems() {
+        return this.items.filter(item => !item.favorite);
+      },
+      filteredFavorites() {
+        return this.items.filter(item => item.favorite);
+      }
+      }
   }
   </script>
   

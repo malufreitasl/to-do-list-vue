@@ -1,13 +1,17 @@
 <template>
   <h1>Welcome to your TO-DO's list app</h1>
   <div class="container">
-    <ToDoInput />
+    <div>
+      <ToDoInput />
+      <ToDoCatFacts />
+    </div>
     <ToDoItems />
   </div>
 </template>
 
 <script>
 import ToDoInput from './components/ToDoInput.vue'
+import ToDoCatFacts from './components/ToDoCatFacts.vue'
 import ToDoItems from './components/ToDoItems.vue'
 import { mapState } from 'vuex';
 
@@ -15,6 +19,7 @@ export default {
   name: 'App',
   components: {
     ToDoInput,
+    ToDoCatFacts,
     ToDoItems
   },
   computed: {

@@ -43,7 +43,10 @@ export default {
         id: uuidv4(),
         title: this.title,
         description: this.description,
-        favorite: false
+        favorite: false,
+        completed: false,
+        edit: false, 
+        showDescription: false
       })
       this.title = '';
       this.description = '';
