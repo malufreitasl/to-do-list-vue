@@ -1,27 +1,29 @@
 <template>
     <div class="item-card" >
-        <div class="item-info">
-            <div class="main-info">           
-                <input type="checkbox" class="checkbox">
-                <label @click="onClickShow">{{ item.title }}</label>
+        <div class="item">
+            <div class="item-info">
+                <div class="main-info">           
+                    <input type="checkbox" class="checkbox">
+                    <label @click="onClickShow">{{ item.title }}</label>
+                </div>
             </div>
-            <div v-if="showContent">
-                <input class="description" />Description: {{ item.description }}
+            <div class="buttons">
+                <div class="edit-button">
+                    <PencilIcon />
+                </div>
+                <div class="favorite-button" @click="onClickFavorite" v-if="item.favorite">
+                    <StarIcon/>
+                </div>
+                <div class="favorite-button" @click="onClickFavorite" v-else>
+                    <FilledStarIcon/>
+                </div>
+                <div class="delete-button" @click="onClickRemove">
+                    <TrashIcon />   
+                </div>
             </div>
         </div>
-        <div class="buttons">
-            <div class="edit-button">
-                <PencilIcon />
-            </div>
-            <div class="favorite-button" @click="onClickFavorite" v-if="item.favorite">
-                <StarIcon/>
-            </div>
-            <div class="favorite-button" @click="onClickFavorite" v-else>
-                <FilledStarIcon/>
-            </div>
-            <div class="delete-button" @click="onClickRemove">
-                <TrashIcon />   
-            </div>
+        <div v-if="showContent">
+            <div class="description">Description: {{ item.description }} </div>
         </div>
     </div>
 </template>
@@ -75,8 +77,8 @@ export default {
 .item-card {
   display: flex;
   overflow-y: scroll;
-  flex-direction: column;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 5px;
   width: 100%;
   padding: 15px;
@@ -86,6 +88,13 @@ export default {
 }
 .item-card:hover {
     box-shadow: rgb(204, 204, 204) 0px 0px 2em;
+}
+.item {
+    display: flex;
+  overflow-y: scroll;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 .item-info {
     display: flex;
