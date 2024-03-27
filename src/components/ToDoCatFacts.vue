@@ -47,7 +47,7 @@ export default {
       for (let i = 0; i < this.amount; i++) {
         this.addItem({
           id: uuidv4(),
-          title: `Cat number ${i + 1}`,
+          title: `${i + 1} Cat Fact`,
           description: this.catsData[i].text,
           favorite: false,
           completed: false,
