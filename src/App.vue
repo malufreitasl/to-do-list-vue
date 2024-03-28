@@ -1,7 +1,7 @@
 <template>
   <h1>Welcome to your TO-DO's list app</h1>
   <div class="container">
-    <div>
+    <div class="to-do-inputs">
       <ToDoInput />
       <ToDoCatFacts />
     </div>
@@ -30,12 +30,20 @@ export default {
 </script>
 
 <style>
+:root {
+  --primary-color: #EEB038;
+  --secondary-color: #2c3e50;
+  --terciary-color: #f4f4f4;
+  --gray-focus-color: #dfdfdf;
+  --shadow-color: #cccccc;
+  --light-background-color: #fafafa;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--secondary-color);
   margin-top: 60px;
 }
 .container {
@@ -43,5 +51,20 @@ export default {
   justify-content: center;
   gap: 100px;
   margin-top: 30px;
+  margin-bottom: 80px;
+  flex-wrap: wrap;
+}
+.to-do-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+@media (max-width: 1000px) {
+  .container {
+    gap: 30px;
+  }
+  .to-do-inputs {
+    gap: 30px;
+  }
 }
 </style>
