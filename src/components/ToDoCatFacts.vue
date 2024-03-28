@@ -9,7 +9,7 @@
           v-model.number="amount"
           required>
       </div>
-      <input type="submit" value="Add cat facts" class="submit-button"/>
+      <input type="submit" :value="loading ? 'Loading...' : 'Add cat facts'" :disabled="loading" :class="{ 'loading': loading }"  class="submit-button"/>
     </form>
   </div>
 </template>
@@ -24,12 +24,14 @@ export default {
     return {
       amount: 0,
       catsData: [],
+      loading: false 
     }
   },
   methods: {
     ...mapActions(["addItem"]),
     async fetchData() {
       try {
+        this.loading = true;
         const response = (
         this.amount === 1 ?
           await fetch(`https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount`)
@@ -41,6 +43,8 @@ export default {
         this.catsData = await response.json();
       } catch (error) {
         console.error('Fail to fetch cat data:', error);
+      } finally {
+        this.loading = false; 
       }
     },
     async onSubmit() {
@@ -94,19 +98,22 @@ input[type="number"] {
   font-size: 18px;
 }
 input[type="number"]:focus {
-    outline-color: var(--gray-focus-color);
+  outline-color: var(--gray-focus-color);
 }
 .submit-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
 }
 .submit-button:hover {
-    background-color: #ac7d20;
+  background-color: #ac7d20;
+}
+.loading:hover {
+    background-color: var(--primary-color); 
 }
 @media (max-width: 1000px) {
   input[type="number"] {

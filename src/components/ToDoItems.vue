@@ -35,10 +35,10 @@ export default {
   computed: {
     ...mapState(["items"]),
     filteredItems() {
-      return this.items.filter(item => !item.favorite);
+      return this.items.filter(item => !item.favorite && !item.edit);
     },
     filteredFavorites() {
-      return this.items.filter(item => item.favorite);
+      return this.items.filter(item => item.favorite && !item.edit);
     }
     }
 }

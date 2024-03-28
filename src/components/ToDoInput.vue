@@ -28,7 +28,7 @@
           
       </div>
 
-      <input type="submit" value="Add new item" class="submit-button"/>
+      <input type="submit" value="Add new item" class="submit-button" />
     </form>
 
   </div>
