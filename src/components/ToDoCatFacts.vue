@@ -49,7 +49,7 @@ export default {
     },
     async onSubmit() {
       await this.fetchData();
-      for (let i = 0; i < this.catsData.length - 1; i++) {
+      for (let i = 0; i < this.catsData.length; i++) {
         this.addItem({
           id: uuidv4(),
           title: `#${i + 1} Cat Fact`,
