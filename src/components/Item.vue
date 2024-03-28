@@ -23,7 +23,9 @@
                     type="text" 
                     class="item-title" 
                     v-model="todoItem.title" 
-                    v-on:keyup.enter="onClickEdit"/>
+                    v-on:keyup.enter="onClickEdit"
+                    maxlength="50"
+                    required/>
             </div>
             <Buttons :item="item"/>
         </div>
@@ -37,7 +39,9 @@
                 class="description-info"  
                 v-else-if="item.showDescription && item.edit" 
                 v-model="todoItem.description" 
-                v-on:keyup.enter="onClickEdit">
+                v-on:keyup.enter="onClickEdit"
+                maxlength="500"
+                required>
             </textarea>
         </div>
     </div>
@@ -89,11 +93,11 @@ export default {
     width: 100%;
     padding: 5px 15px;
     border-radius: 5px;
-    background-color: #fafafa;
-    box-shadow: rgb(204, 204, 204) 0px 0px 1em;
+    background-color: var(--light-background-color);
+    box-shadow: var(--shadow-color) 0px 0px 1em;
 }
 .item-card:hover {
-    box-shadow: rgb(204, 204, 204) 0px 0px 2em;
+    box-shadow: var(--shadow-color) 0px 0px 2em;
 }
 .item {
     display: flex;
@@ -141,22 +145,24 @@ export default {
     font-size: 12px;
     padding-left: 10px;
     padding-bottom: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 input[type="checkbox"] {
     width: 1.2em;
     height: 1.2rem;
-    accent-color: #EEB038;
+    accent-color: var(--primary-color);
     transition: background-color 0.3s;
 }
 input[type="text"] {
     width: 90%;
     border: none;
     border-radius: 5px;
-    border: 1px solid rgb(244, 244, 244);
+    border: 1px solid var(--terciary-color);
     padding: 8px ;
 }
 input[type="text"]:focus {
-    outline-color: rgb(223, 223, 223);
+    outline-color: var(--gray-focus-color);
 }
 textarea {
     display: flex;
@@ -164,14 +170,14 @@ textarea {
     flex-wrap: wrap;
     width: 100%;
     height: 50px;
-    border: 1px solid rgb(244, 244, 244);
+    border: 1px solid var(--terciary-color);
     border-radius: 5px;
     padding: 10px 12px;
     margin-right: 15px;
     resize: none
 }
 textarea:focus {
-    outline-color: rgb(223, 223, 223);
+    outline-color: var(--gray-focus-color);
 }
 
 </style>

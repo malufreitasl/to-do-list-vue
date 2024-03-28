@@ -7,7 +7,11 @@
           type="text" 
           placeholder="New item..." 
           v-model="title"
+          maxlength="50"
           required>
+          <div class="title-counter">
+            <p class="length-counter">{{ title.length }}/50</p>
+          </div>
       </div>
 
       <div class="description">
@@ -15,7 +19,13 @@
           class="description-input" 
           v-model="description"
           placeholder="Description..."
-          required></textarea>
+          maxlength="500"
+          required>
+        </textarea>
+        <div class="description-counter">
+          <p class="length-counter">{{ description.length }}/500</p>
+        </div>
+          
       </div>
 
       <input type="submit" value="Add new item" class="submit-button"/>
@@ -33,7 +43,7 @@ export default {
   data () {
     return {
       title: '',
-      description: ''
+      description: '',
     }
   },
   methods: {
@@ -56,31 +66,40 @@ export default {
 
 
 <style scoped>
-.to-do-input {
-  padding-bottom: 40px;
-}
 .to-do-form {
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
-  gap: 25px;
+  gap: 8px;
   padding-top: 25px;
 }
 .title {
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
   gap: 2px;
 }
 .title-input {
   width: 400px;
   padding: 7px 10px;
-  border: 1px solid rgb(244, 244, 244);
+  border: 1px solid var(--terciary-color);
   border-radius: 5px;
   font-size: 18px;
 }
 .title-input:focus {
-    outline-color: rgb(223, 223, 223);
+    outline-color: var(--gray-focus-color);
+}
+.text-counter .description-counter{
+  display: flex;
+}
+.length-counter {
+  text-align: end;
+  padding-top: 5px;
+  padding-right: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0%;
 }
 .description-text {
   font-size: 15px;
@@ -93,19 +112,19 @@ export default {
   flex-wrap: wrap;
   width: 400px;
   height: 100px;
-  border: 1px solid rgb(244, 244, 244);
+  border: 1px solid var(--terciary-color);
   border-radius: 5px;
   padding: 10px 12px;
   font-size: 12px;
 }
 .description-input:focus {
-  outline-color: rgb(223, 223, 223);
+  outline-color: var(--gray-focus-color);
 }
 textarea {
   resize: none;
 }
 .submit-button {
-  background-color: #EEB038;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -115,5 +134,13 @@ textarea {
 }
 .submit-button:hover {
   background-color: #ac7d20;
+}
+@media (max-width: 1000px) {
+  .description-input {
+    width: 350px;
+  }
+  .title-input {
+    width: 350px;
+  }
 }
 </style>
