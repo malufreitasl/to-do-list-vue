@@ -49,6 +49,9 @@ This will ensure that your code follows best practices and conventions.
 - **Cat Facts**: Users can import cat facts from an external API and create to-do items from them.
 - **State Management**: Vuex is used for state management, with a store containing an array of to-do tasks.
 
+## With more time, what would I do?
+- Separate editing states for "TO-DO'S" and "Favorites": Maintain separate editing states for items in the "TO-DO'S" list and the "Favorites" list. This would allow editing of items in one list without affecting the editing state of items in the other list.
+
 ## External API
 The application fetches cat facts from the [Cat Facts API](https://alexwohlbruck.github.io/cat-facts/) and creates a to-do item for each fact imported.
 
