@@ -15,7 +15,7 @@
                 </div>
             </div>
             
-            <div class="delete-button" @click="onClickRemove">
+            <div class="delete-button" @click="confirmRemoveItem">
                 <TrashIcon />   
             </div>
         </div>
@@ -54,9 +54,11 @@ export default {
     onClickFavorite () {
         this.changeFavoriteStatus(this.item.id);
     },
-    onClickRemove () {
+    confirmRemoveItem() {
+      if (confirm("Are you sure you want to remove this item? This action is not reversible")) {
         this.removeItem(this.item.id);
-    }, 
+      }
+    }
     }
 }
 </script>
